@@ -1,4 +1,4 @@
-"""Parse meeting transcripts into speaker turns: WebVTT, Teams copy/paste, bracket Markdown, and `Name: text` lines."""
+"""Parse meeting transcripts into speaker turns: WebVTT, Teams copy/paste, Teams download, bracket Markdown, and `Name: text` lines."""
 import re
 from dataclasses import dataclass
 from datetime import datetime
@@ -16,7 +16,7 @@ class UnsupportedFormat(ValueError):
     pass
 
 
-FORMATS = ("vtt", "teams-paste", "md-bracket", "speaker-lines")
+FORMATS = ("vtt", "teams-paste", "md-bracket", "teams-export", "speaker-lines")
 # Teams copy/paste carries UI icon glyphs (private-use code points) and zero-width marks.
 NOISE = re.compile("[\ue000-\uf8ff\u200b-\u200d\u2060\ufeff]")
 
@@ -169,6 +169,26 @@ def parse_md_bracket(raw: str) -> tuple[list[Turn], dict]:
     return merge([cue for cue in cues if cue.text], gap=float("inf")), meta
 
 
+# --- Teams transcript download: "Name  0:05" header, then text lines --------
+
+EXPORT_HEADER = re.compile(r"^(?P<speaker>\S.*?)(?: {2,}|\t)(?P<time>\d{1,2}(?::\d{2}){1,2})$")
+
+
+def parse_teams_export(raw: str) -> list[Turn]:
+    cues: list[Turn] = []
+    current: Turn | None = None
+    for line in raw.replace("\r\n", "\n").split("\n"):
+        stripped = line.replace("\xa0", " ").strip()
+        header = EXPORT_HEADER.match(stripped)
+        if header:
+            start = to_seconds(header.group("time"))
+            current = Turn(header.group("speaker").strip(), start, start, "")
+            cues.append(current)
+        elif current and stripped:
+            current.text = f"{current.text} {stripped}".strip()
+    return merge([cue for cue in cues if cue.text], gap=float("inf"))
+
+
 # --- Speaker-labeled lines without times: "Name: text" -----------------------
 
 SPEAKER_LINE = re.compile(r"^(?P<speaker>[A-Z][\w.'\-]*(?: [\w.'\-]+){0,4}):\s+(?P<text>\S.*)$")
@@ -198,11 +218,14 @@ def detect_format(body: str) -> str:
         return "md-bracket"
     if any(is_clock(line) for line in lines):
         return "teams-paste"
+    if sum(1 for line in lines if EXPORT_HEADER.match(line)) >= 2:
+        return "teams-export"
     if sum(1 for line in lines if SPEAKER_LINE.match(line)) >= 2:
         return "speaker-lines"
     raise UnsupportedFormat(
         "Unrecognized transcript format. Supported: WebVTT, Teams copy/paste, "
-        "'[Speaker] YYYY-MM-DD HH:MM:SS' blocks, or 'Speaker: text' lines."
+        "'[Speaker] YYYY-MM-DD HH:MM:SS' blocks, Teams download ('Speaker  0:05' headers), "
+        "or 'Speaker: text' lines."
     )
 
 
@@ -218,4 +241,6 @@ def parse(body: str) -> tuple[str, list[Turn], list[str], dict]:
     if kind == "md-bracket":
         turns, meta = parse_md_bracket(body)
         return kind, turns, [], meta
+    if kind == "teams-export":
+        return kind, parse_teams_export(body), [], {}
     return kind, parse_speaker_lines(strip_leading_h1(body)), [], {}

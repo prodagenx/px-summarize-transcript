@@ -13,7 +13,7 @@ Every bundle member carries frontmatter so the files read as one bundle in Obsid
 | `cdate` | Created date | Kept once set. First stamp uses the file's creation date. |
 | `mdate` | Last modified by the skill | Updated every run |
 | `created-by` | `px-summarize-transcript` | |
-| `skill-version` | e.g. `2.3.0` | |
+| `skill-version` | e.g. `2.4.0` | |
 | `status` | `draft` | Kept once set, so you can change it to `reviewed` |
 | `tags` | `transcript`, `meeting-notes`, plus 3-6 derived topic tags | |
 | `meeting-date` | Meeting date | From the transcript, source frontmatter, file name, or `--meeting-date`. Omitted when unknown |
@@ -22,7 +22,7 @@ Every bundle member carries frontmatter so the files read as one bundle in Obsid
 | `attendees` | Display names of speakers, or `--attendee` / `--attendees` | |
 | `speaker-aliases` | `Label in transcript = Display name` entries | From `--alias`. Omitted when no label was mapped |
 | `mentioned-not-present` | `Name (context)` entries | From `--mentioned` |
-| `source-format` | `vtt`, `md-bracket`, `teams-paste`, `speaker-lines` | |
+| `source-format` | `vtt`, `md-bracket`, `teams-paste`, `teams-export`, `speaker-lines` | |
 | `has-timestamps` | `true` / `false` | |
 | `bundle-source` | `"[[<stem>.vtt]]"` or `"[[<stem>]]"` | |
 | `bundle-source-meta` | `"[[<stem>.source]]"` | `.vtt` bundles only |

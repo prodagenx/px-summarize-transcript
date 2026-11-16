@@ -1,11 +1,11 @@
 ---
 name: px-summarize-transcript
-description: 'Extract decisions, material statements, action items, and open questions from a meeting transcript (.vtt, Teams copy/paste .txt, or Markdown .md), with speaker attribution and timestamped verbatim evidence, and save them as a linked bundle with frontmatter next to the transcript. Assigns owners to action items, tracks what carried over from the previous meeting in a series, and can file transcripts into series folders. Use for /px-summarize-transcript, Teams/Zoom/Webex transcripts, meeting minutes, "what was decided", "who said", "action items from the call", "pull decisions from transcript", "meeting recap with evidence", "summarize this transcript", "what is still open from last meeting", "process the pending transcripts in this folder".'
+description: 'Extract decisions, material statements, action items, and open questions from a meeting transcript (.vtt, Teams copy/paste or Teams "Download transcript" .txt, or Markdown .md), with speaker attribution and timestamped verbatim evidence, and save them as a linked bundle with frontmatter next to the transcript. Assigns owners to action items, tracks what carried over from the previous meeting in a series, and can file transcripts into series folders. Use for /px-summarize-transcript, Teams/Zoom/Webex transcripts, meeting minutes, "what was decided", "who said", "action items from the call", "pull decisions from transcript", "meeting recap with evidence", "summarize this transcript", "what is still open from last meeting", "process the pending transcripts in this folder".'
 argument-hint: 'Path to the transcript (.vtt, .txt, or .md), or a folder of transcripts. Optionally: "for <your name>".'
 license: MIT
 metadata:
   author: prodagenx
-  version: "2.3.0"
+  version: "2.4.0"
 ---
 
 # px-summarize-transcript
@@ -14,7 +14,7 @@ Turns a meeting transcript into an evidence-backed record of what was decided, w
 
 ## When to Use
 
-- A `.vtt`, a Teams transcript pasted into `.txt` or `.md`, a `[Speaker] YYYY-MM-DD HH:MM:SS` Markdown transcript, or `Name: text` lines need decisions and action items pulled out.
+- A `.vtt`, a Teams transcript pasted into `.txt` or `.md`, a Teams "Download transcript" file (`Name  0:05` header lines), a `[Speaker] YYYY-MM-DD HH:MM:SS` Markdown transcript, or `Name: text` lines need decisions and action items pulled out.
 - Someone asks who said something, what was agreed, or who owns a follow-up.
 - Someone asks what is still open from the previous meeting in a recurring series.
 - Meeting outcomes must be reconciled against project documents.

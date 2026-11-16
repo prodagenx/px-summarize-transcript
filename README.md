@@ -4,7 +4,7 @@ Turns a meeting transcript into an evidence-backed bundle: a turn index, a summa
 
 - **Command:** `/px-summarize-transcript <path to transcript or folder>` (add "for \<your name\>" for a personal view)
 - **Agent instructions:** [SKILL.md](SKILL.md)
-- **Version:** 2.3.0 (prodagenx, MIT)
+- **Version:** 2.4.0 (prodagenx, MIT)
 
 ## Supported inputs
 
@@ -13,6 +13,7 @@ Turns a meeting transcript into an evidence-backed bundle: a turn index, a summa
 | `.vtt` from Teams, Zoom, or Webex | `vtt` | yes |
 | `.txt` or `.md` with a Teams copy/paste | `teams-paste` | yes |
 | `.md` with `[Speaker] YYYY-MM-DD HH:MM:SS` lines | `md-bracket` | yes, as offsets from the first line |
+| `.txt` or `.md` from Teams "Download transcript" (`Name  0:05` headers) | `teams-export` | yes |
 | `.txt` or `.md` with `Name: text` lines | `speaker-lines` | no |
 
 Details and samples: [references/input-formats.md](references/input-formats.md).
@@ -95,7 +96,7 @@ All are standard-library Python (3.10+).
 | `scripts/file_transcript.py <transcript> --series <name> [--root dir]` | Move a transcript and its bundle files into `<root>/<series>/`. Skips already-filed transcripts, reports duplicates and name conflicts. `--list` shows existing series, `--dry-run` previews |
 | `scripts/scan.py <folder> [--recursive]` | List transcripts as `new`, `turns-only`, `summarized`, or `not-a-transcript` |
 | `scripts/backfill.py <root> [--apply]` | Align legacy bundles: rename sources to the shared stem and fix links. Dry run by default |
-| `scripts/parsers.py` | Format detection and the four parsers |
+| `scripts/parsers.py` | Format detection and the five parsers |
 | `scripts/frontmatter.py` | Line-based frontmatter merge that never rewrites keys it doesn't own |
 | `scripts/bundle.py` | Bundle paths, versioning, and stamping shared by the CLIs |
 

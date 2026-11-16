@@ -9,7 +9,7 @@ import frontmatter
 from parsers import Turn, fmt, parse
 
 SKILL = "px-summarize-transcript"
-VERSION = "2.3.0"
+VERSION = "2.4.0"
 FIXED_TAGS = ["transcript", "meeting-notes"]
 SOURCE_EXTS = {".vtt", ".txt", ".md"}
 SUMMARY = re.compile(r"^(?P<stem>.*)\.summary(?:\.v(?P<n>\d+))?\.md$")
@@ -162,7 +162,7 @@ def analyze(bundle: Bundle) -> dict:
     has_times = turns[0].start is not None
     ends = [t.end for t in turns if t.end is not None]
     duration = None
-    if has_times and kind in ("vtt", "teams-paste", "md-bracket"):
+    if has_times and kind in ("vtt", "teams-paste", "md-bracket", "teams-export"):
         duration = fmt(max(ends) if kind == "vtt" else turns[-1].start)
     candidates = (
         ("transcript", meta.get("meeting_date")),

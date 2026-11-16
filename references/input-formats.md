@@ -7,7 +7,8 @@
 | 1 | `vtt` | Body starts with `WEBVTT` | Cue offsets. Same-speaker cues within 2 s merge. |
 | 2 | `md-bracket` | Any line `[Speaker] YYYY-MM-DD HH:MM:SS` | Offset from the first line (`00:00:00`). Date and start time go to frontmatter. |
 | 3 | `teams-paste` | Any Teams clock line such as `0 minutes 3 seconds0:03` | Offsets from the pasted clock. |
-| 4 | `speaker-lines` | At least two `Name: text` lines | None. Turns are `[T001] Name: text`. |
+| 4 | `teams-export` | At least two `Name  0:05` header lines (2+ spaces or a tab before `M:SS` / `H:MM:SS`) | Offsets from the header clock. |
+| 5 | `speaker-lines` | At least two `Name: text` lines | None. Turns are `[T001] Name: text`. |
 
 Anything else fails with an error listing these formats. Consecutive turns by the same speaker merge into one turn (except `vtt`, which uses the 2 s gap).
 
@@ -44,6 +45,16 @@ It.
 ```
 
 Avatar initials (`SD`) are dropped. `started/stopped transcription` lines go to the `Transcription:` header.
+
+**teams-export** (Teams "Download transcript" as `.txt`/`.docx` text)
+
+```text
+Sam Diaz  0:05
+So, can you share the summary?
+
+Jordan Lee  0:34
+Sure, you can all see my screen now, right?
+```
 
 **speaker-lines**
 
