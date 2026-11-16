@@ -6,6 +6,86 @@ Turns a meeting transcript into an evidence-backed bundle: a turn index, a summa
 - **Agent instructions:** [SKILL.md](SKILL.md)
 - **Version:** 2.4.0 (prodagenx, MIT)
 
+## Install (Claude Code)
+
+Claude Code loads personal skills from `~/.claude/skills/<skill-name>/`, and project skills from `.claude/skills/<skill-name>/` inside a repository. The folder must be named `px-summarize-transcript` and contain `SKILL.md` at its top level.
+
+Requirements: Python 3.10 or later on your `PATH`. The scripts use only the standard library, so there is nothing to `pip install`.
+
+### As a Claude Code plugin
+
+This repository is also a plugin marketplace. Inside a Claude Code session (version 2.1.275 or later):
+
+```text
+/plugin install px-summarize-transcript --marketplace prodagenx/px-summarize-transcript
+```
+
+Or from your shell:
+
+```bash
+claude plugin marketplace add prodagenx/px-summarize-transcript
+claude plugin install px-summarize-transcript@px-summarize-transcript
+```
+
+Plugin skills carry the plugin name as a prefix, so you run it as `/px-summarize-transcript:px-summarize-transcript`. Update with `claude plugin marketplace update px-summarize-transcript`. Uninstall with `claude plugin marketplace remove px-summarize-transcript`.
+
+Pick one install method. A plugin install next to a copy in `~/.claude/skills/` loads the skill twice.
+
+### With the skills CLI
+
+The community [skills CLI](https://skills.sh) installs from GitHub and needs Node.js:
+
+```bash
+npx skills add prodagenx/px-summarize-transcript
+```
+
+Update with `npx skills update`.
+
+### With git
+
+macOS, Linux, or Git Bash:
+
+```bash
+git clone https://github.com/prodagenx/px-summarize-transcript.git ~/.claude/skills/px-summarize-transcript
+```
+
+Windows PowerShell:
+
+```powershell
+git clone https://github.com/prodagenx/px-summarize-transcript.git "$HOME\.claude\skills\px-summarize-transcript"
+```
+
+To install for one project only, clone into `.claude/skills/px-summarize-transcript` at the project root instead.
+
+To update later, pull the latest version:
+
+```bash
+git -C ~/.claude/skills/px-summarize-transcript pull
+```
+
+### Manual download
+
+1. Download the ZIP: on the [GitHub repository](https://github.com/prodagenx/px-summarize-transcript) choose **Code > Download ZIP**, or use [main.zip](https://github.com/prodagenx/px-summarize-transcript/archive/refs/heads/main.zip) directly.
+2. Extract it. The folder is named `px-summarize-transcript-main`.
+3. Rename the folder to `px-summarize-transcript`.
+4. Move it into `~/.claude/skills/` (on Windows, `C:\Users\<you>\.claude\skills\`). Create the `skills` folder if it doesn't exist.
+5. Check that the path is `~/.claude/skills/px-summarize-transcript/SKILL.md`, not one folder deeper.
+
+The same steps from PowerShell (for a first install; delete the old folder before reinstalling):
+
+```powershell
+$zip = "$env:TEMP\px-summarize-transcript.zip"
+Invoke-WebRequest https://github.com/prodagenx/px-summarize-transcript/archive/refs/heads/main.zip -OutFile $zip
+Expand-Archive $zip -DestinationPath "$HOME\.claude\skills" -Force
+Rename-Item "$HOME\.claude\skills\px-summarize-transcript-main" px-summarize-transcript
+```
+
+A manual install doesn't update itself. Repeat the steps to get a newer version.
+
+### Check the install
+
+Start a new Claude Code session (skills load at startup) and run `/px-summarize-transcript <path to a transcript>`. You can also ask Claude "what skills do you have?" and look for `px-summarize-transcript`.
+
 ## Supported inputs
 
 | Input | Detected format | Timestamps |

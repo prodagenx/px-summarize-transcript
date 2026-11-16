@@ -1,0 +1,18 @@
+{
+  "name": "px-summarize-transcript",
+  "owner": {
+    "name": "prodagenx"
+  },
+  "metadata": {
+    "description": "Meeting transcript summarizer skill by prodagenx"
+  },
+  "plugins": [
+    {
+      "name": "px-summarize-transcript",
+      "description": "Evidence-backed decisions, material statements, action items, and open questions from meeting transcripts",
+      "source": "./",
+      "strict": false,
+      "skills": ["./"]
+    }
+  ]
+}
